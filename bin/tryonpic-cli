@@ -1,0 +1,97 @@
+#!/usr/bin/env node
+/**
+ * tryonpic-cli v1.0.0
+ * Ecommerce Apparel Ghost-Mannequin & Marketplace Image Spec Compliance CLI
+ * Official reference utility for https://tryonpic.com
+ * License: MIT
+ */
+
+const ROUTES = [
+  {
+    "name": "TryOnPic Home",
+    "url": "https://tryonpic.com/"
+  },
+  {
+    "name": "AI Virtual Try-On Outfit & Model Pose Catalog",
+    "url": "https://tryonpic.com/catalog"
+  },
+  {
+    "name": "Free Online Virtual Clothes Try-On Studio",
+    "url": "https://tryonpic.com/free"
+  },
+  {
+    "name": "3D Invisible Ghost Mannequin Apparel Generator",
+    "url": "https://tryonpic.com/ghost-mannequin"
+  },
+  {
+    "name": "Ghost Mannequin Photography Lighting & Composite Guide",
+    "url": "https://tryonpic.com/guides/ghost-mannequin-photography"
+  },
+  {
+    "name": "Amazon Apparel Pure-White Background Compliance Rules",
+    "url": "https://tryonpic.com/guides/amazon-apparel-white-background-rules"
+  }
+];
+
+const SPECS = [
+  {
+    "Marketplace Channel": "Amazon Main Apparel",
+    "Canvas Resolution & Ratio": "1600 - 2560 px (1:1 or 4:5)",
+    "Background RGB Requirement": "Pure RGB(255, 255, 255)",
+    "Garment Frame Fill": "85% - 92% of longest edge",
+    "Color Profile & Format": "sRGB JPEG / PNG, zero watermarks"
+  },
+  {
+    "Marketplace Channel": "Shopify Collection Grid",
+    "Canvas Resolution & Ratio": "2048 x 2048 px (1:1) or 2:3",
+    "Background RGB Requirement": "Consistent studio neutral / #FFF",
+    "Garment Frame Fill": "78% - 88% uniform baseline",
+    "Color Profile & Format": "sRGB WebP / AVIF progressive"
+  },
+  {
+    "Marketplace Channel": "Google Merchant Apparel",
+    "Canvas Resolution & Ratio": ">= 250 x 250 px (1500+ rec.)",
+    "Background RGB Requirement": "Solid white / light studio backdrop",
+    "Garment Frame Fill": "75% - 90% unobstructed",
+    "Color Profile & Format": "sRGB JPEG / PNG / WebP"
+  },
+  {
+    "Marketplace Channel": "Ghost Mannequin Composite",
+    "Canvas Resolution & Ratio": "2000 x 2667 px (3:4 vertical)",
+    "Background RGB Requirement": "Alpha matte + RGB(255, 255, 255)",
+    "Garment Frame Fill": "3D hollow collar depth",
+    "Color Profile & Format": "16-bit internal -> 8-bit sRGB"
+  }
+];
+
+const args = process.argv.slice(2);
+
+if (args.includes('--version') || args.includes('-v')) {
+  console.log('tryonpic-cli v1.0.0 (https://tryonpic.com)');
+  process.exit(0);
+}
+
+if (args.includes('--routes')) {
+  console.log(JSON.stringify({ domain: 'tryonpic.com', endpoints: ROUTES }, null, 2));
+  process.exit(0);
+}
+
+if (args.includes('--specs') || args.includes('--json')) {
+  console.log(JSON.stringify({ domain: 'tryonpic.com', benchmark: "Ecommerce Apparel Marketplace Image & Colorimetric Compliance Standards", rows: SPECS }, null, 2));
+  process.exit(0);
+}
+
+console.log([
+  'TryOnPic CLI (tryonpic-cli v1.0.0)',
+  'Ecommerce Apparel Ghost-Mannequin & Marketplace Image Spec Compliance CLI',
+  'Homepage: https://tryonpic.com',
+  '',
+  'Usage:',
+  '  tryonpic-cli --help       Show command overview and verified endpoints',
+  '  tryonpic-cli --version    Print CLI version',
+  '  tryonpic-cli --specs      Output domain technical specification matrix as JSON',
+  '  tryonpic-cli --routes     Output verified production URLs as JSON',
+  '',
+  'Verified Production Endpoints:',
+  ...ROUTES.map((r) => '  - ' + r.name + ': ' + r.url),
+].join('\n'));
